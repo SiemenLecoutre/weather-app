@@ -30,11 +30,11 @@ export const PositionProvider = ({ children }) => {
       setLon(lon);
       getWeather(lat, lon);
       fetch(
-        `http://api.positionstack.com/v1/reverse?access_key=${process.env.REACT_APP_GEOCODE_API}&query=${lat},${lon}`
+        `http://www.mapquestapi.com/geocoding/v1/reverse?key=${process.env.REACT_APP_GEOCODE_API}&location=${lat},${lon}`
       )
         .then((response) => response.json())
         .then((data) => {
-          setCity(data.data[0].locality);
+          setCity(data.results[0].locations[0].adminArea5);
         });
     }
     function error(err) {
@@ -46,14 +46,17 @@ export const PositionProvider = ({ children }) => {
   //  Get coords from city name
   const getCoords = (city) => {
     fetch(
-      `http://api.positionstack.com/v1/forward?access_key=${process.env.REACT_APP_GEOCODE_API}&query=${city}`
+      `http://www.mapquestapi.com/geocoding/v1/address?key=${process.env.REACT_APP_GEOCODE_API}&location=${city}`
     )
       .then((response) => response.json())
       .then((data) => {
-        setLat(data.data[0].latitude);
-        setLon(data.data[0].longitude);
-        getWeather(data.data[0].latitude, data.data[0].longitude);
-        setCity(data.data[0].locality);
+        console.log(data);
+        const lat = data.results[0].locations[0].latLng.lat;
+        const lon = data.results[0].locations[0].latLng.lng;
+        setLat(lat);
+        setLon(lon);
+        getWeather(lat, lon);
+        setCity(data.results[0].locations[0].adminArea5);
       });
   };
 
