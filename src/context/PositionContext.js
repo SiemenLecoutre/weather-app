@@ -30,7 +30,7 @@ export const PositionProvider = ({ children }) => {
       setLon(lon);
       getWeather(lat, lon);
       fetch(
-        `http://www.mapquestapi.com/geocoding/v1/reverse?key=${process.env.REACT_APP_GEOCODE_API}&location=${lat},${lon}`
+        `https://www.mapquestapi.com/geocoding/v1/reverse?key=${process.env.REACT_APP_GEOCODE_API}&location=${lat},${lon}`
       )
         .then((response) => response.json())
         .then((data) => {
@@ -46,7 +46,7 @@ export const PositionProvider = ({ children }) => {
   //  Get coords from city name
   const getCoords = (city) => {
     fetch(
-      `http://www.mapquestapi.com/geocoding/v1/address?key=${process.env.REACT_APP_GEOCODE_API}&location=${city}`
+      `https://www.mapquestapi.com/geocoding/v1/address?key=${process.env.REACT_APP_GEOCODE_API}&location=${city}`
     )
       .then((response) => response.json())
       .then((data) => {
